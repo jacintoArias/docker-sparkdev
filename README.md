@@ -1,5 +1,6 @@
 [![Docker Automated buil](https://img.shields.io/docker/automated/enriquegrodrigo/docker-sparkdev.svg)](https://hub.docker.com/r/enriquegrodrigo/docker-sparkdev/)
 [![Docker Build Statu](https://img.shields.io/docker/build/enriquegrodrigo/docker-sparkdev.svg)](https://hub.docker.com/r/enriquegrodrigo/docker-sparkdev/)
+
 # docker-sparkdev
 
 This is a base base image for developing Apache Spark applications. 
@@ -8,33 +9,47 @@ This is a base base image for developing Apache Spark applications.
 
 One can easily obtain the latest image using:
 ```
-docker pull enriquegrodrigo/docker-sparkdev:latest
-```
-
-## Building the image 
-
-For building the image:
-
-```
-git clone https://github.com/enriquegrodrigo/docker-pydata.git
-docker build -t="Name of the image" .
+docker pull jacintoarias/docker-sparkdev:latest
 ```
 
 ## Usage
 
-To run the Spark shell: 
+### SBT
 
-	docker run --rm -it -v $(pwd)/project:/home/work/project -v $(pwd)/.ivy:/sbtlib enriquegrodrigo/sparkdev  
+The following command starts the sbt prompt, mounts your working directory as project root and builds the dependencies cache on the local `.ivy` folder.
 
-One can also run the scala shell
+```
+docker run \
+    --rm \
+    -v $(pwd):/home/work/project \
+    -v $(pwd)/.ivy:/sbtlib \
+    jacintoarias/docker-sparkdev \
+    sbt -Dsbt.global.staging=./.staging package \
+    -ivy ./.ivy \
+```
 
-	docker run --rm -it -v $(pwd)/project:/home/work/project -v $(pwd)/.ivy:/sbtlib enriquegrodrigo/sparkdev scala 
 
+### Spark
 
-Or compile the project using sbt: 
+Runs an application withing a jar file in your local sbt build
 
-	docker run --rm -it -v $(pwd)/project:/home/work/project -v $(pwd)/.ivy:/sbtlib enriquegrodrigo/sparkdev sbt 
+```
+docker run \
+    --rm \
+    -v $(pwd):/home/work/project \
+    jacintoarias/docker-sparkdev \
+    spark-submit \
+    --class <YOUR MAIN CLASS> \
+    target/scala-2.11/<YOUR JAR FILE> \
+    <ARGUMENTS>
+```
 
-One can also execut Spark applications using spark-submit: 
+Runs spark shell or any other program
 
-	docker run --rm -it -v $(pwd)/project:/home/work/project -v $(pwd)/.ivy:/sbtlib enriquegrodrigo/sparkdev spark-submit app.jar
+```
+docker run \
+    --rm \
+    -v $(pwd):/home/work/project \
+    jacintoarias/docker-sparkdev \
+    spark-shell
+```

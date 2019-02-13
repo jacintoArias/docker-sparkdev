@@ -32,16 +32,11 @@ RUN \
 
 
 RUN cd /opt/ && \
-  wget  http://ftp.cixug.es/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz -O spark-2.3.0-bin-hadoop2.7.tgz && \
+  wget  http://ftp.cixug.es/apache/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz -O spark-2.3.0-bin-hadoop2.7.tgz && \
   tar -xvf spark-2.3.0-bin-hadoop2.7.tgz && \
   rm spark-2.3.0-bin-hadoop2.7.tgz
 
 ENV PATH "$PATH:/opt/spark-2.3.0-bin-hadoop2.7/bin"
-
-
-###################
-# Installs Spark 2.3 
-###################
 
 VOLUME /home/work/project 
 

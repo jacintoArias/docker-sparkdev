@@ -30,18 +30,23 @@ RUN \
 # Installs Spark 2.3 
 ###################
 
+ENV SPARK_HOME "/opt/spark"
 
 RUN cd /opt/ && \
-  wget  http://ftp.cixug.es/apache/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz -O spark-2.3.0-bin-hadoop2.7.tgz && \
-  tar -xvf spark-2.3.0-bin-hadoop2.7.tgz && \
-  rm spark-2.3.0-bin-hadoop2.7.tgz
+  wget  http://ftp.cixug.es/apache/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz -O spark-2.3.2-bin-hadoop2.7.tgz && \
+  tar -xvf spark-2.3.2-bin-hadoop2.7.tgz && \
+  rm spark-2.3.2-bin-hadoop2.7.tgz && \
+  ln -s /opt/spark-2.3.2-bin-hadoop2.7/ $SPARK_HOME
 
-ENV PATH "$PATH:/opt/spark-2.3.0-bin-hadoop2.7/bin"
+ENV PATH "$PATH:$SPARK_HOME"
 
 VOLUME /home/work/project 
 
 WORKDIR /home/work/project
 
+EXPOSE 8080
+EXPOSE 8081
+EXPOSE 7077
 EXPOSE 4040
 
 CMD ["spark-shell"]

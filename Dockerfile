@@ -38,7 +38,9 @@ RUN cd /opt/ && \
   rm spark-2.3.2-bin-hadoop2.7.tgz && \
   ln -s /opt/spark-2.3.2-bin-hadoop2.7/ $SPARK_HOME
 
-ENV PATH "$PATH:$SPARK_HOME"
+ENV PATH "$PATH:$SPARK_HOME/bin"
+
+COPY scripts/ /opt/init-scripts/
 
 VOLUME /home/work/project 
 

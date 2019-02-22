@@ -40,13 +40,14 @@ RUN cd /opt/ && \
 
 ENV PATH "$PATH:$SPARK_HOME/bin"
 
-COPY scripts/ /opt/init-scripts/
+COPY init-scripts/ /opt/init-scripts/
 
 VOLUME /home/work/project 
 
 WORKDIR /home/work/project
 
 EXPOSE 8080
+EXPOSE 10000
 EXPOSE 8081
 EXPOSE 7077
 EXPOSE 4040

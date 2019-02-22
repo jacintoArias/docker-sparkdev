@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  spark-master:
+    image: jacintoarias/sparkdev
+    command: "/opt/init-scripts/init-cluster.sh"
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 4040:4040
+      - 7077:7077
+      - 10000:10000
+    volumes:
+      - /tmp/spark-data:/data/
